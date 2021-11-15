@@ -1,15 +1,9 @@
 import streamlit as st
-from streamlit_folium import folium_static
 import pandas as pd
 import numpy as np
-import re
 from datetime import timedelta
 import datetime
-import time
 import plotly.express as px
-from bson import ObjectId
-import folium
-from folium.plugins import MarkerCluster
 import streamlit.components.v1 as components
 
 @st.cache(allow_output_mutation=True)
