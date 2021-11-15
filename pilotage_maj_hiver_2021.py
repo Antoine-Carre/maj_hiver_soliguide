@@ -346,7 +346,8 @@ if categorie_2 == 'Les comptes pro':
     else:
         figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
         
-    #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+    figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+    figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
 
     st.plotly_chart(figComptePro, use_container_width=True)
 
@@ -355,12 +356,19 @@ if categorie_2 == 'Les comptes pro':
     st.markdown("### Combien de fiche sont reliées au compte pro ?")
 
     df_fiches_reliées_2 = df_fiche_cpe_pro.copy()
+    
+    if categorie == "France":
+        df_fiches_reliées_2 = df_fiches_reliées_2
+    else:
+        df_fiches_reliées_2 = df_fiches_reliées_2[df_fiches_reliées_2.territory == int(cat_dict[categorie])]
+        
     df_fiches_reliées_2.replace({'Niveau de validation des comptes':{ 0 : "Invitation", 1 : "Compte activé", 2 : "Compte non validé", 3:"Fiches non liées"} }, inplace=True)
 
     test = pd.DataFrame(df_fiches_reliées_2['Niveau de validation des comptes'].value_counts()).rename_axis('Status').reset_index()
 
     fig6 = px.pie(values=test['Niveau de validation des comptes'], names=test.Status, )
     fig6.update_traces(textinfo="percent+label")
+    fig6.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
 
     st.plotly_chart(fig6, use_container_width=True)
 
