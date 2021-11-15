@@ -1,0 +1,379 @@
+import streamlit as st
+from streamlit_folium import folium_static
+import pandas as pd
+import numpy as np
+import re
+from datetime import timedelta
+import datetime
+import time
+import plotly.express as px
+from bson import ObjectId
+import folium
+from folium.plugins import MarkerCluster
+import streamlit.components.v1 as components
+
+@st.cache(allow_output_mutation=True)
+def load_df(url):
+    df = pd.read_csv(url)
+    return df
+
+# option
+st.set_page_config(page_title="Soliguide - Mise à jour hiver 2021-2022",
+                   page_icon="https://pbs.twimg.com/profile_images/1321098074765361153/F4UFTeix.png",
+                   initial_sidebar_state="expanded",
+                   layout="wide",)
+
+
+#############
+## sidebar ##
+############# 
+st.sidebar.image("https://soliguide.fr/assets/images/logo.png", use_column_width=True)
+st.sidebar.title('Soliguide 2021')
+st.sidebar.subheader('Mise à jour été')
+
+categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Alpes-Maritimes (06)",
+                                            "Gironde (33)",
+                                            "Loire-Atlantique (44)", "Bas-Rhin (67)", 
+                                            "Paris (75)", "Seine-et-Marne (77)","Yvelines (78)",
+                                            "Essonne (91)", "Hauts-de-Seine (92)",
+                                            "Seine-Saint-Denis (93)","Val-de-Marne (94)",
+                                            "Val-d'Oise (95)"))
+
+categorie_2 = st.sidebar.radio("Sections", ("Mails", "Structures",
+                                            "Généralités", 'Les comptes pro',
+                                            "Statistiques quotidienne"))
+
+
+##########
+## DATA ##
+##########
+
+# modifier selon la localisation de la BD
+mails = './pilotage màj hiver 2021/df_mails_data.csv'
+fiches = './pilotage màj hiver 2021/df_fiches_data.csv'
+history = './pilotage màj hiver 2021/df_history_data.csv'
+orga = './pilotage màj hiver 2021/df_orga_data.csv'
+cpe_pro = './pilotage màj hiver 2021/df_cpte_pro_data.csv'
+fiche_cpte_pro = './pilotage màj hiver 2021/df_fiche_with_cpte_pro_data.csv'
+
+
+df_mails = load_df(mails)
+df_mails = df_mails.fillna(0)
+df_mails['territory'] = df_mails['territory'].astype(str)
+
+df_fiches = load_df(fiches)
+df_fiches_màj = df_fiches
+
+df_history_campaign_users = load_df(history)
+
+df_orga = load_df(orga)
+
+df_cpe_pro = load_df(cpe_pro)
+
+df_fiche_cpe_pro = load_df(fiche_cpte_pro)
+
+
+
+cat_dict = {"France":'98', "Alpes-Maritimes (06)" :"06",
+            "Gironde (33)":"33","Loire-Atlantique (44)" : "44", 
+            "Bas-Rhin (67)":"67", "Paris (75)" : "75", "Seine-et-Marne (77)":'77',
+            "Yvelines (78)":"78", "Essonne (91)" :"91", "Hauts-de-Seine (92)":"92",
+            "Seine-Saint-Denis (93)": "93","Val-de-Marne (94)": "94", "Val-d'Oise (95)":"95"}
+
+            
+################
+## MAILS PAGE ##
+################
+
+if categorie_2 == 'Mails':
+    st.title('Les Mails')
+
+
+
+    col1, col2, col3 = st.columns(3)
+
+    html_string_1 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'emails envoyés'])}</font>
+    <br/><font size='3'>emails envoyés<br></font></center>
+    """
+
+    html_string_2 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Relance envoyées'])}</font>
+    <br/><font size='3'>dont emails de relance envoyés<br></font></center>
+    """
+
+    html_string_3 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Rappels demandées'])}</font>
+    <br/><font size='3'>demandes de rappels effectuées<br></font></center>
+    """
+
+    col1.markdown(html_string_1, unsafe_allow_html=True)
+
+    col2.markdown(html_string_2, unsafe_allow_html=True)
+
+    col3.markdown(html_string_3, unsafe_allow_html=True)
+
+
+    html_string = "<br>"
+
+    st.markdown(html_string, unsafe_allow_html=True)
+    st.markdown(html_string, unsafe_allow_html=True)
+
+
+
+    col1, col2, col3 = st.columns(3)
+
+    html_string_4 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails rejetés'])}</font>
+    <br/><font size='3'>emails rejetés<br></font></center>
+    """
+
+    html_string_5 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails cliqués'])}</font>
+    <br/><font size='3'>emails cliqués<br></font></center>
+    """
+
+    html_string_6 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails ouverts'])}</font>
+    <br/><font size='3'>emails ouverts<br></font></center>
+    """
+
+    col1.markdown(html_string_4, unsafe_allow_html=True)
+
+    col2.markdown(html_string_5, unsafe_allow_html=True)
+
+    col3.markdown(html_string_6, unsafe_allow_html=True)
+
+#####################
+## STRUCTURES PAGE ##
+#####################
+
+if categorie_2 == 'Structures':
+    st.title('Les Structures')
+
+    if categorie == "France":
+        df_fiches_màj = df_fiches_màj
+    else:
+        df_fiches_màj = df_fiches_màj[df_fiches_màj.territory == int(cat_dict[categorie])]
+
+    # #### Combien de fiches ont été mises à jour totalement ?
+    df_fiches_màj_vf = df_fiches_màj[['territory','sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']]
+    df_fiches_màj_vf.replace({True:1, False:0}, inplace=True)
+    df_fiches_màj_vf['A jour'] = df_fiches_màj_vf[['sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']].sum(axis=1)
+    df_fiches_màj_pie = df_fiches_màj_vf['A jour'].map(lambda x: 'Fiches à jour' if x == 4 else 'Fiches à mettre à jour')
+    df_fiches_màj_pie = pd.DataFrame(df_fiches_màj_pie.value_counts())
+
+    st.markdown('### Combien de fiches ont été mises à jour totalement ?')
+    fig = px.pie(values=df_fiches_màj_pie['A jour'], names=df_fiches_màj_pie.index, color_discrete_sequence= [ '#7201a8', '#d8576b'],
+    labels={"true": "Sepal Length (cm)",
+    "false": "Sepal Width (cm)"})
+    fig.update_traces(textinfo="percent+label")
+    fig.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
+
+
+    # Qu'est-ce qui est mis à jour ? Qu'est-ce qui ne l'est pas ?
+
+    # Fiches à jour
+    df_fiches_màj['A jour'] = df_fiches_màj_vf[['sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']].sum(axis=1)
+
+    df_fiches_màj_final = df_fiches_màj[['sections.tempMessage.date','A jour']]
+    df_fiches_màj_final['date'] =  pd.to_datetime(df_fiches_màj_final['sections.tempMessage.date'])
+    df_fiches_màj_final['date'] = df_fiches_màj_final['date'].dt.strftime('%Y-%m-%d')
+
+    df_fiches_màj_final['A jour'].replace({4:'A jour', 0:'A mettre à jour', 1:'A mettre à jour', 2:'A mettre à jour', 3:'A mettre à jour'}, inplace=True)
+
+    table = pd.pivot_table(df_fiches_màj_final, values='A jour', index=['date'], columns=['A jour'], aggfunc=np.count_nonzero)
+    table["Fiches actualisées"] = table['A jour'].cumsum()
+    table['Fiches à mettre à jour'] = df_fiches_màj.lieu_id.count() - table['Fiches actualisées']
+    table.reset_index(inplace=True)
+    
+    # Nbre de fiches màj par jour
+
+    fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
+    fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
+    fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.markdown("### Qu'est-ce qui est mis à jour ? Qu'est-ce qui ne l'est pas ?")
+
+    st.plotly_chart(fig_2, use_container_width=True)
+
+    # Qui a fait la màj ?
+
+    if categorie == "France":
+        df_history_campaign_users = df_history_campaign_users
+    else:
+        df_history_campaign_users = df_history_campaign_users[df_history_campaign_users.territoire == int(cat_dict[categorie])]
+
+    df_history_campaign_users_final = df_history_campaign_users[['status','created_at']]
+
+    table_2 = pd.pivot_table(df_history_campaign_users_final, values='status', index=['created_at'], columns=['status'], aggfunc=np.count_nonzero)
+
+    table_2.reset_index(inplace=True)
+
+    table_2.fillna(0, inplace=True)
+
+    fig3 = px.bar(table_2, x="created_at", y=["ADMIN_SOLIGUIDE", "PRO"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
+    newnames = {'ADMIN_SOLIGUIDE':"l'équipe Soliguide", 'PRO': 'les acteurs'}
+    fig3.for_each_trace(lambda t: t.update(name = newnames[t.name],
+                                      legendgroup = newnames[t.name],
+                                      hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])))
+    fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
+    fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+
+
+
+    st.markdown("### Qui a fait la màj ?")
+
+    st.plotly_chart(fig3, use_container_width=True)
+
+
+    #Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc.
+    # Creation colonne pasDeChangement
+    df_fiches_màj['pasDeChangement'] = np.where((df_fiches_màj['sections.tempMessage.updated'] == True) & (df_fiches_màj['sections.tempMessage.changes'] == False) 
+                                                & (df_fiches_màj['sections.services.updated'] == True) & (df_fiches_màj['sections.services.changes'] == False) 
+                                                & (df_fiches_màj['sections.hours.updated'] == True) & (df_fiches_màj['sections.hours.changes'] == False)
+                                                & (df_fiches_màj['sections.closed.updated'] == True) & (df_fiches_màj['sections.closed.changes'] == False),
+                                                1, 0)
+
+    # Creation colonne changementHoraire
+    df_fiches_màj['changementHoraire'] = np.where((df_fiches_màj['sections.hours.updated'] == True) & (df_fiches_màj['sections.hours.changes'] == True), 1, 0)
+
+    # Creation colonne changementServices
+    df_fiches_màj['changementServices'] = np.where((df_fiches_màj['sections.services.updated'] == True) & (df_fiches_màj['sections.services.changes'] == True), 1, 0)
+
+    # Creation colonne fermeture
+    df_fiches_màj['fermeture'] = np.where((df_fiches_màj['sections.closed.updated'] == True) & (df_fiches_màj['sections.closed.changes'] == True), 1, 0)
+
+    df_fiches_màj['dateFin'] = pd.to_datetime(df_fiches_màj['dateFin'], errors = 'coerce',  utc=True)
+    df_fiches_màj['dateFin'] = df_fiches_màj['dateFin'].dt.strftime('%Y-%m-%d')
+
+    df_fiches_màj['dateDebut'] = pd.to_datetime(df_fiches_màj['dateDebut'],errors = 'coerce',  utc=True)
+    df_fiches_màj['dateDebut'] = df_fiches_màj['dateDebut'].dt.strftime('%Y-%m-%d')
+
+    df_fiches_màj['durée'] = (pd.to_datetime(df_fiches_màj['dateFin'], errors = 'coerce',  utc=True) - pd.to_datetime(df_fiches_màj['dateDebut'], errors = 'coerce', utc=True))
+
+    # Creation colonne pasDeChangement
+    df_fiches_màj['Fermeture_1_semaine'] = np.where((df_fiches_màj.durée >= '5 days') & (df_fiches_màj.durée <= '7 days') & (df_fiches_màj.fermeture == 1), 1, 0)
+    df_fiches_màj['Fermeture_2_semaines'] = np.where((df_fiches_màj.durée > '7 days') & (df_fiches_màj.durée < '15 days')& (df_fiches_màj.fermeture == 1), 1, 0)
+    df_fiches_màj['Fermeture_PLUS_de_2_semaines'] = np.where((df_fiches_màj.durée > '14 days') & (df_fiches_màj.fermeture == 1), 1, 0)
+    df_fiches_màj['Fermeture_MOINS_de_1_semaine'] = np.where((df_fiches_màj.durée < '5 days') & (df_fiches_màj.fermeture == 1), 1, 0)
+
+    df_fiches_màj_changing = df_fiches_màj[['territory','pasDeChangement','changementHoraire','changementServices','fermeture','Fermeture_MOINS_de_1_semaine',
+                                         'Fermeture_1_semaine','Fermeture_2_semaines','Fermeture_PLUS_de_2_semaines']]
+
+    df_fiches_màj_changing_total = df_fiches_màj_changing.groupby(['territory']).sum()
+    df_fiches_màj_changing_total.loc["Total"] = df_fiches_màj_changing_total.sum()
+    df_fiches_màj_changing_total.reset_index(inplace=True)
+
+    fig4 = px.bar(df_fiches_màj_changing_total[df_fiches_màj_changing_total.territory == 'Total'], x="territory", y=["pasDeChangement","changementHoraire", "changementServices", 
+    "Fermeture_MOINS_de_1_semaine", "Fermeture_1_semaine","Fermeture_2_semaines", "Fermeture_PLUS_de_2_semaines"],barmode='group', color_discrete_sequence=px.colors.sequential.Plasma,) 
+
+    newnames = {"pasDeChangement" : "Aucun changement","changementHoraire":"changement d'horaire", "changementServices": 'Offre de services modifiés', 
+    "Fermeture_MOINS_de_1_semaine":"Fermeture inférieure à une semaine", "Fermeture_1_semaine":"Fermeture d'une semaine","Fermeture_2_semaines" :"Fermeture de 2 semaines", 
+    "Fermeture_PLUS_de_2_semaines":"Fremeture supérieur à 2 semaines"}
+    fig4.for_each_trace(lambda t: t.update(name = newnames[t.name],
+                                      legendgroup = newnames[t.name],
+                                      hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])))
+    fig4.update_traces(hovertemplate = "Nbre de fiches: %{value}")
+    fig4.update_layout(xaxis_title=f"{categorie}", yaxis_title="Nombre de fiches", legend_title="Types de modification",)
+    fig4.update_xaxes(visible=True, showticklabels=False)
+
+
+    st.markdown("### Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc")
+    st.plotly_chart(fig4, use_container_width=True)
+
+
+    df_fiches_màj['update_level'] = df_fiches_màj_vf[['sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']].sum(axis=1)
+    df_fiches_màj['màj_incomplete'] = np.where((df_fiches_màj['update_level']> 0) & (df_fiches_màj['update_level'] < 4), 1, 0)
+    formulaire_en_stand_by = pd.DataFrame(df_fiches_màj['màj_incomplete'] .value_counts())
+
+    if formulaire_en_stand_by.count()[0] == 1:
+        pass
+    else:
+        html_string_10 = f"""<br>
+        <center><font face='Helvetica' size='7'>{formulaire_en_stand_by.loc[1,'màj_incomplete']}</font>
+        <br/><font size='3'>Nombre de formulaires incomplets<br></font></center>
+        """
+
+        st.markdown(html_string_10, unsafe_allow_html=True)
+
+#####################
+## GENERALITE PAGE ##
+#####################
+
+if categorie_2 == 'Généralités':
+    st.title('Les Généralités')
+
+
+    st.markdown("### Qui fait le mieux les mises à jours ? Gros organisation (+5 fiches) ? ")
+   
+    if categorie == "France":
+        df_orga = df_orga
+    else:
+        df_orga = df_orga[df_orga.territory == int(cat_dict[categorie])]
+
+    test = df_orga[['categorie','Orga','lieu_id','A jour']]
+    test2 = test.groupby('categorie').agg({'Orga': 'nunique','lieu_id': 'count'})#.reset_index().rename(columns={'count':'categorieCount', 'sum':'Nombre de fiches'})
+    df11=test.groupby('categorie')['A jour'].apply(lambda x: (x==4).sum())#.reset_index(name='count')
+    test2 = test2.join(df11)
+    test2['taux_de_màj'] = round((test2['A jour'] / test2.lieu_id)*100, 2)
+    test2 = test2.reset_index()
+    test2.rename(columns={'lieu_id': 'Nombre de fiches totales', 'A jour': 'Nombre de fiches actualisées'}, inplace=True)
+
+    fig5 = px.bar(test2, x="categorie", y="taux_de_màj", hover_name='categorie', hover_data=["Nombre de fiches totales", "Nombre de fiches actualisées"], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
+    fig5.update_layout(xaxis_title=f"{categorie}", yaxis_title="Pourcentage des structures à jour", legend_title="Types de modification",)
+    fig5.update_xaxes(visible=True, )
+
+
+    st.plotly_chart(fig5, use_container_width=True)
+
+
+#####################
+## COMPTE PRO PAGE ##
+#####################
+
+if categorie_2 == 'Les comptes pro':
+    st.title('Les Comptes Professionnels')
+
+    st.markdown("### Combien de compte pro créé depuis le début de la mise à jour ?")
+
+    new_header = df_cpe_pro.iloc[0] #grab the first row for the header
+    df_cpe_pro = df_cpe_pro[1:] #take the data less the header row
+    df_cpe_pro.columns = new_header #set the header row as the df header
+    df_cpe_pro.rename(columns={ df_cpe_pro.columns[1]: "createdAt" }, inplace = True)
+    df_cpe_pro.rename(columns={ df_cpe_pro.columns[-1]: "Total" }, inplace = True)
+
+
+    if categorie == "France":
+        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
+    else:
+        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
+        
+    #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+    st.plotly_chart(figComptePro, use_container_width=True)
+
+
+
+    st.markdown("### Combien de fiche sont reliées au compte pro ?")
+
+    df_fiches_reliées_2 = df_fiche_cpe_pro.copy()
+    df_fiches_reliées_2.replace({'Niveau de validation des comptes':{ 0 : "Invitation", 1 : "Compte activé", 2 : "Compte non validé", 3:"Fiches non liées"} }, inplace=True)
+
+    test = pd.DataFrame(df_fiches_reliées_2['Niveau de validation des comptes'].value_counts()).rename_axis('Status').reset_index()
+
+    fig6 = px.pie(values=test['Niveau de validation des comptes'], names=test.Status, )
+    fig6.update_traces(textinfo="percent+label")
+
+    st.plotly_chart(fig6, use_container_width=True)
+
+
+#####################
+## STATISTIQUE PAGE ##
+#####################
+
+if categorie_2 == 'Statistiques quotidienne':
+    st.title('Les Statistiques quotidienne')
