@@ -88,8 +88,7 @@ if categorie_2 == 'Mails':
     st.title('Les Mails')
 
 
-
-    col1, col2, col3 = st.columns(3)
+   col1, col2, col3 = st.columns(3)
 
     html_string_1 = f"""<br>
     <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'emails envoyés'])}</font>
@@ -102,8 +101,8 @@ if categorie_2 == 'Mails':
     """
 
     html_string_3 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Rappels demandées'])}</font>
-    <br/><font size='3'>demandes de rappels effectuées<br></font></center>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
+    <br/><font size='3'>emails rejetés<br></font></center>
     """
 
     col1.markdown(html_string_1, unsafe_allow_html=True)
@@ -123,9 +122,10 @@ if categorie_2 == 'Mails':
     col1, col2, col3 = st.columns(3)
 
     html_string_4 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
-    <br/><font size='3'>emails rejetés<br></font></center>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails ouverts'])}</font>
+    <br/><font size='3'>emails ouverts<br></font></center>
     """
+    
 
     html_string_5 = f"""<br>
     <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails cliqués'])}</font>
@@ -133,10 +133,10 @@ if categorie_2 == 'Mails':
     """
 
     html_string_6 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails ouverts'])}</font>
-    <br/><font size='3'>emails ouverts<br></font></center>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Rappels demandées'])}</font>
+    <br/><font size='3'>demandes de rappels effectuées<br></font></center>
     """
-
+    
     col1.markdown(html_string_4, unsafe_allow_html=True)
 
     col2.markdown(html_string_5, unsafe_allow_html=True)
