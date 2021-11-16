@@ -319,15 +319,15 @@ if categorie_2 == 'Généralités':
     else:
         df_orga = df_orga[df_orga.territory == int(cat_dict[categorie])]
 
-    test = df_orga[['categorie','Orga','lieu_id','A jour']]
-    test2 = test.groupby('categorie').agg({'Orga': 'nunique','lieu_id': 'count'})#.reset_index().rename(columns={'count':'categorieCount', 'sum':'Nombre de fiches'})
-    df11=test.groupby('categorie')['A jour'].apply(lambda x: (x==4).sum())#.reset_index(name='count')
-    test2 = test2.join(df11)
-    test2['taux_de_màj'] = round((test2['A jour'] / test2.lieu_id)*100, 2)
+    test = df_orga[['categorie','Orga','lieu_id','PRO','updated']]
+    test = test.join(pd.get_dummies(test.updated))
+    test2 = test.groupby('categorie').agg({'Orga': 'nunique','lieu_id': 'count','Fiches à jour':'sum','PRO':'sum'})#.reset_index().rename(columns={'count':'categorieCount', 'sum':'Nombre de fiches'})
+    test2['taux_de_màj'] = round((test2['PRO'] / test2['Fiches à jour'])*100, 2)
     test2 = test2.reset_index()
-    test2.rename(columns={'lieu_id': 'Nombre de fiches totales', 'A jour': 'Nombre de fiches actualisées'}, inplace=True)
 
-    fig5 = px.bar(test2, x="categorie", y="taux_de_màj", hover_name='categorie', hover_data=["Nombre de fiches totales", "Nombre de fiches actualisées"], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
+    test2.rename(columns={"Fiches à jour": "Nombre de fiches mises à jour", "PRO": "Nombre de fiches mises à jour par les pro"}, inplace=True)
+
+    fig5 = px.bar(test2, x="categorie", y="taux_de_màj", hover_name='categorie', hover_data=["Nombre de fiches mises à jour", "Nombre de fiches mises à jour par les pro"], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
     fig5.update_layout(xaxis_title=f"{categorie}", yaxis_title="Pourcentage des structures à jour", legend_title="Types de modification",)
     fig5.update_xaxes(visible=True, )
 
