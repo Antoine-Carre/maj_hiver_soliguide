@@ -88,7 +88,7 @@ if categorie_2 == 'Mails':
     st.title('Les Mails')
 
 
-   col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
     html_string_1 = f"""<br>
     <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'emails envoyés'])}</font>
