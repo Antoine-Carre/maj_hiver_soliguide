@@ -53,7 +53,7 @@ fiche_cpte_pro = './pilotage màj hiver 2021/df_fiche_with_cpte_pro_data.csv'
 
 df_mails = load_df(mails)
 df_mails = df_mails.fillna(0)
-df_mails['territory'] = df_mails['territory'].astype(str)
+df_mails.set_index('territory', inplace=True)
 
 df_fiches = load_df(fiches)
 df_fiches_màj = df_fiches
@@ -68,7 +68,7 @@ df_fiche_cpe_pro = load_df(fiche_cpte_pro)
 
 
 
-cat_dict = {"France":'98', "Alpes-Maritimes (06)" :"06",
+cat_dict = {"France":'Total', "Alpes-Maritimes (06)" :"06",
             "Gironde (33)":"33","Loire-Atlantique (44)" : "44", 
             "Bas-Rhin (67)":"67", "Paris (75)" : "75", "Seine-et-Marne (77)":'77',
             "Yvelines (78)":"78", "Essonne (91)" :"91", "Hauts-de-Seine (92)":"92",
