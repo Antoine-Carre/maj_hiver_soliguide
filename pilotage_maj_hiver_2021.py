@@ -87,17 +87,17 @@ if categorie_2 == 'Mails':
     col1, col2, col3 = st.columns(3)
 
     html_string_1 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'emails envoyés'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'emails envoyés'])}</font>
     <br/><font size='3'>emails envoyés<br></font></center>
     """
 
     html_string_2 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Relance envoyées'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Relance envoyées'])}</font>
     <br/><font size='3'>dont emails de relance envoyés<br></font></center>
     """
 
     html_string_3 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Rappels demandées'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Rappels demandées'])}</font>
     <br/><font size='3'>demandes de rappels effectuées<br></font></center>
     """
 
@@ -118,17 +118,17 @@ if categorie_2 == 'Mails':
     col1, col2, col3 = st.columns(3)
 
     html_string_4 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails rejetés'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
     <br/><font size='3'>emails rejetés<br></font></center>
     """
 
     html_string_5 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails cliqués'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails cliqués'])}</font>
     <br/><font size='3'>emails cliqués<br></font></center>
     """
 
     html_string_6 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{int(cat_dict[categorie])},'Mails ouverts'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails ouverts'])}</font>
     <br/><font size='3'>emails ouverts<br></font></center>
     """
 
