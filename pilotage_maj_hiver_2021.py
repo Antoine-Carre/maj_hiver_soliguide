@@ -219,7 +219,7 @@ if categorie_2 == 'Structures':
 
             table_2.fillna(0, inplace=True)
 
-            fig3 = px.bar(table_2, x="created_at", y=["ADMIN_SOLIGUIDE", "PRO"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
+            fig3 = px.bar(table_2, x="created_at", y=["ADMIN_SOLIGUIDE", "PRO"], color_discrete_sequence= ['#3E3A71', '#2896A0']) 
             newnames = {'ADMIN_SOLIGUIDE':"l'équipe Soliguide", 'PRO': 'les acteurs'}
             fig3.for_each_trace(lambda t: t.update(name = newnames[t.name],
                                             legendgroup = newnames[t.name],
