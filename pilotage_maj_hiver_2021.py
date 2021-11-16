@@ -26,10 +26,11 @@ st.sidebar.title('Soliguide 2021')
 st.sidebar.subheader('Mise à jour été')
 
 categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Alpes-Maritimes (06)",
-                                            "Gironde (33)",
-                                            "Loire-Atlantique (44)", "Bas-Rhin (67)", 
-                                            "Paris (75)", "Seine-et-Marne (77)","Yvelines (78)",
-                                            "Essonne (91)", "Hauts-de-Seine (92)",
+                                            "Ardèche (07)","Bouche-du-Rhône (13)","Cantal (15)",
+                                            "Drôme(26)", "Gironde (33)","Hérault (34)",
+                                            "Indre (36)", "Loire-Atlantique (44)", "Puy-de-Dôme (63)",
+                                            "Bas-Rhin (67)", "Paris (75)", "Seine-Maritime (76)","Seine-et-Marne (77)",
+                                            "Yvelines (78)","Essonne (91)", "Hauts-de-Seine (92)",
                                             "Seine-Saint-Denis (93)","Val-de-Marne (94)",
                                             "Val-d'Oise (95)"))
 
@@ -68,11 +69,15 @@ df_fiche_cpe_pro = load_df(fiche_cpte_pro)
 
 
 
-cat_dict = {"France":'Total', "Alpes-Maritimes (06)" :"06",
-            "Gironde (33)":"33","Loire-Atlantique (44)" : "44", 
-            "Bas-Rhin (67)":"67", "Paris (75)" : "75", "Seine-et-Marne (77)":'77',
-            "Yvelines (78)":"78", "Essonne (91)" :"91", "Hauts-de-Seine (92)":"92",
-            "Seine-Saint-Denis (93)": "93","Val-de-Marne (94)": "94", "Val-d'Oise (95)":"95"}
+cat_dict = {"France":'Total', "Alpes-Maritimes (06)" :"06", "Ardèche (07)":"07",
+            "Bouche-du-Rhône (13)": "13","Cantal (15)":"15", "Drôme(26)":"26",
+            "Gironde (33)":"33","Hérault (34)":"34","Indre (36)":"36",
+            "Loire-Atlantique (44)" : "44", "Puy-de-Dôme (63)":"63",
+            "Bas-Rhin (67)":"67", "Paris (75)" : "75", "Seine-Maritime (76)":"76",
+            "Seine-et-Marne (77)":'77', "Yvelines (78)":"78", "Essonne (91)" :"91", 
+            "Hauts-de-Seine (92)":"92","Seine-Saint-Denis (93)": "93","Val-de-Marne (94)": "94", 
+            "Val-d'Oise (95)":"95"}
+
 
             
 ################
