@@ -46,7 +46,6 @@ categorie_2 = st.sidebar.radio("Sections", ("Mails", "Structures",
 # modifier selon la localisation de la BD
 mails = './pilotage màj hiver 2021/df_mails_data.csv'
 fiches = './pilotage màj hiver 2021/df_fiches_data.csv'
-history = './pilotage màj hiver 2021/df_history_data.csv'
 orga = './pilotage màj hiver 2021/df_orga_data.csv'
 cpe_pro = './pilotage màj hiver 2021/df_cpte_pro_data.csv'
 fiche_cpte_pro = './pilotage màj hiver 2021/df_fiche_with_cpte_pro_data.csv'
@@ -58,8 +57,6 @@ df_mails.set_index('territory', inplace=True)
 
 df_fiches = load_df(fiches)
 df_fiches_màj = df_fiches
-
-df_history_campaign_users = load_df(history)
 
 df_orga = load_df(orga)
 
