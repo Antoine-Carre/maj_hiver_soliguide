@@ -206,12 +206,7 @@ if categorie_2 == 'Structures':
 
             # Qui a fait la màj ?
 
-            if categorie == "France":
-                df_history_campaign_users = df_history_campaign_users
-            else:
-                df_history_campaign_users = df_history_campaign_users[df_history_campaign_users.territoire == int(cat_dict[categorie])]
-
-            df_history_campaign_users_final = df_history_campaign_users[['status','created_at']]
+            df_history_campaign_users_final = df_fiches_màj[['status','created_at','territory']]
 
             table_2 = pd.pivot_table(df_history_campaign_users_final, values='status', index=['created_at'], columns=['status'], aggfunc=np.count_nonzero)
 
