@@ -323,8 +323,10 @@ if categorie_2 == 'Généralités':
                'organisation moyenne':'organisation moyenne (de 2 à 5 fiches)',
               'petite organisation':'petite organisation (1 fiche)'}, inplace=True)
 
-    fig5 = px.bar(test2, x="categorie", y="taux_de_màj", hover_name='categorie', hover_data=["Nombre de fiches mises à jour", "Nombre de fiches mises à jour par les pro"], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
-    fig5.update_layout(xaxis_title=f"{categorie}", yaxis_title="Pourcentage des structures à jour", legend_title="Types de modification",)
+    fig5 = px.bar(test2, x="categorie", y="taux_de_màj", custom_data=['Nombre de fiches mises à jour'], hover_data=['Nombre de fiches mises à jour par les pro'], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
+    fig5.update_traces(hovertemplate = "<b>%{x}</b><br><br>Taux de mise à jour par les pros: <b>%{y}%</b><br>Nombre de fiches à jour liées à une %{x}:  %{customdata[0]}<br>Nombre de fiches mises à jour par les pro:  %{customdata[1]}<br>")
+    
+    fig5.update_layout(xaxis_title=f"{categorie}", yaxis_title="Pourcentage des structures à jour", legend_title="Types d'organisation",)
     fig5.update_xaxes(visible=True, )
 
 
