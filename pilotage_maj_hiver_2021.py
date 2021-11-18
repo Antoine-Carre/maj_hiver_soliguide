@@ -35,8 +35,7 @@ categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Al
                                             "Val-d'Oise (95)"))
 
 categorie_2 = st.sidebar.radio("Sections", ("Mails", "Structures",
-                                            "Généralités", 'Les comptes pro',
-                                            "Statistiques quotidienne"))
+                                            "Généralités", 'Les comptes pro'))
 
 
 ##########
@@ -312,12 +311,17 @@ if categorie_2 == 'Généralités':
         df_orga = df_orga[df_orga.territory == int(cat_dict[categorie])]
 
     test = df_orga[['categorie','Orga','lieu_id','PRO','updated']]
+    
     test = test.join(pd.get_dummies(test.updated))
     test2 = test.groupby('categorie').agg({'Orga': 'nunique','lieu_id': 'count','Fiches à jour':'sum','PRO':'sum'})#.reset_index().rename(columns={'count':'categorieCount', 'sum':'Nombre de fiches'})
     test2['taux_de_màj'] = round((test2['PRO'] / test2['Fiches à jour'])*100, 2)
     test2 = test2.reset_index()
 
     test2.rename(columns={"Fiches à jour": "Nombre de fiches mises à jour", "PRO": "Nombre de fiches mises à jour par les pro"}, inplace=True)
+    
+    test2.replace({'grande organisation':'grande organisation (+ de 5 fiches)', 
+               'organisation moyenne':'organisation moyenne (de 2 à 5 fiches)',
+              'petite organisation':'petite organisation (1 fiche)'}, inplace=True)
 
     fig5 = px.bar(test2, x="categorie", y="taux_de_màj", hover_name='categorie', hover_data=["Nombre de fiches mises à jour", "Nombre de fiches mises à jour par les pro"], color='categorie', color_discrete_sequence=px.colors.sequential.Plasma_r,) 
     fig5.update_layout(xaxis_title=f"{categorie}", yaxis_title="Pourcentage des structures à jour", legend_title="Types de modification",)
@@ -408,10 +412,3 @@ if categorie_2 == 'Les comptes pro':
 
 
         st.plotly_chart(fig6, use_container_width=True)
-
-#####################
-## STATISTIQUE PAGE ##
-#####################
-
-if categorie_2 == 'Statistiques quotidienne':
-    st.title('Les Statistiques quotidienne')
