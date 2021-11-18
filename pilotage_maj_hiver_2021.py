@@ -210,12 +210,10 @@ if categorie_2 == 'Structures':
             table_2.reset_index(inplace=True)
 
             table_2.fillna(0, inplace=True)
+            
+            table_2.rename(columns={'ADMIN_SOLIGUIDE':"l'équipe Soliguide","PRO":"les acteurs"}, inplace=True)
 
-            fig3 = px.bar(table_2, x="created_at", y=["ADMIN_SOLIGUIDE", "PRO"], color_discrete_sequence= ['#3E3A71', '#2896A0']) 
-            newnames = {'ADMIN_SOLIGUIDE':"l'équipe Soliguide", 'PRO': 'les acteurs'}
-            fig3.for_each_trace(lambda t: t.update(name = newnames[t.name],
-                                            legendgroup = newnames[t.name],
-                                            hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])))
+            fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0']) 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
 
