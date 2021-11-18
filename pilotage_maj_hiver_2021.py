@@ -315,7 +315,7 @@ if categorie_2 == 'Généralités':
     
     test = test.join(pd.get_dummies(test.updated))
     
-    if test['Fiches à jour'].isna() :
+    if not 'Fiches à jour' in test.columns:
         st.markdown("Aucune fiche n'a été mise à jour pour le moment")
     else:
         test2 = test.groupby('categorie').agg({'Orga': 'nunique','lieu_id': 'count','Fiches à jour':'sum','PRO':'sum'})#.reset_index().rename(columns={'count':'categorieCount', 'sum':'Nombre de fiches'})
