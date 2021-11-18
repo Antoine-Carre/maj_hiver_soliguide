@@ -380,7 +380,7 @@ if categorie_2 == 'Les comptes pro':
         st.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")
 
 
-    if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)':
+    if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)' and categorie != 'Hérault (34)' and categorie != 'Indre (36)' and categorie != 'Puy-de-Dôme (63)' and categorie != 'Saine-Maritime (76)' :
 
         st.markdown("### Combien de fiche sont reliées au compte pro ?")
 
