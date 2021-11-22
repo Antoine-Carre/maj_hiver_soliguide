@@ -138,6 +138,23 @@ if categorie_2 == 'Mails':
     col2.markdown(html_string_5, unsafe_allow_html=True)
 
     col3.markdown(html_string_6, unsafe_allow_html=True)
+       html_string = "<br>"
+
+    st.markdown(html_string, unsafe_allow_html=True)
+    st.markdown(html_string, unsafe_allow_html=True)
+
+
+    col1, col2, col3 = st.columns(3)
+
+    html_string_7 = f"""<br>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Rappels demandées'])}</font>
+    <br/><font size='3'>emails répondus
+    <br/><font size='3'><i>(Attention : ce chiffre ne tient pas compte des réponses par téléphone ou vers un email nominatif)</i><br></font></center>
+
+    """
+       
+    col1.markdown(html_string_7, unsafe_allow_html=True)
+
 
 #####################
 ## STRUCTURES PAGE ##
