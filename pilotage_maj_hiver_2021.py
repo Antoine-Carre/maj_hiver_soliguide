@@ -389,15 +389,17 @@ if categorie_2 == 'Les comptes pro':
         else:
             df_fiches_reliées_2 = df_fiches_reliées_2[df_fiches_reliées_2.territory == int(cat_dict[categorie])]
 
-        df_fiches_reliées_2.replace({'Niveau de validation des comptes':{ 0 : "Invitation", 1 : "Compte activé", 2 : "Compte non validé", 3:"Fiches non liées"} }, inplace=True)
+        df_fiches_reliées_2.replace({'Niveau de validation des comptes':{ 0 : "Fiches dont le.s compte.s lié.s n'ont pas répondu à l'invitation", 1 : "Fiches dont au moins un compte lié est actif", 2 : "Fiches dont le.s compte.s lié.s n'a.ont pas confirmé.s son.leur invitation.s", 3:"Fiches sans compte lié"} }, inplace=True)
 
         test = pd.DataFrame(df_fiches_reliées_2['Niveau de validation des comptes'].value_counts()).rename_axis('Status').reset_index()
 
         fig6 = px.pie(values=test['Niveau de validation des comptes'], names=test.Status, title='Répartition des fiches par status des comptes liés')
-        fig6.update_traces(textinfo="percent+label")
+        fig6.update_traces(textinfo="percent", textposition='inside', textfont_size=18,)
         fig6.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
-
-
+        fig6.update_layout(legend = dict(font = dict(family = "arial", size = 16, color = "black")), legend_title="Status des comptes liés", )
+        fig6.update_layout(font=dict(
+            family="arial",
+            size=16,))
 
         col1, col2 = st.columns(2)
 
