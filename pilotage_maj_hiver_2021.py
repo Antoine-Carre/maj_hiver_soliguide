@@ -421,7 +421,7 @@ if categorie_2 == 'Les comptes pro':
         col1, col2 = st.columns(2)
 
         html_string_1 = f"""<br>
-        <center><font face='Helvetica' size='7'>{((test['Niveau de validation des comptes'].sum())-(test.loc[int(str(test.index[test.Status == 'Fiches non liées'].tolist())[1:-1]),'Niveau de validation des comptes']))}</font>
+        <center><font face='Helvetica' size='7'>{((test['Niveau de validation des comptes'].sum())-(test.loc[int(str(test.index[test.Status == 'Fiches sans compte lié'].tolist())[1:-1]),'Niveau de validation des comptes']))}</font>
         <br/><font size='3'>Nombre de fiches liées à un compte pro<br></font></center>
         """
 
