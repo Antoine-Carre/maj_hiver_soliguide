@@ -233,6 +233,8 @@ if categorie_2 == 'Structures':
             fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+
+            tabs = pd.DataFrame(df_history_campaign_users_final.status.value_counts())
             
             fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
             fig3bis.update_traces(textinfo="percent+label")
