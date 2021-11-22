@@ -138,7 +138,7 @@ if categorie_2 == 'Mails':
     col2.markdown(html_string_5, unsafe_allow_html=True)
 
     col3.markdown(html_string_6, unsafe_allow_html=True)
-       html_string = "<br>"
+    html_string = "<br>"
 
     st.markdown(html_string, unsafe_allow_html=True)
     st.markdown(html_string, unsafe_allow_html=True)
