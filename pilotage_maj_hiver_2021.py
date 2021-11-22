@@ -35,7 +35,7 @@ categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Al
                                             "Val-d'Oise (95)"))
 
 categorie_2 = st.sidebar.radio("Sections", ("Mails", "Structures",
-                                            "Généralités", 'Les comptes pro'))
+                                            "Organisations", 'Les comptes pro'))
 
 
 ##########
@@ -311,12 +311,12 @@ if categorie_2 == 'Structures':
 
                 st.markdown(html_string_10, unsafe_allow_html=True)
 
-#####################
-## GENERALITE PAGE ##
-#####################
+#######################
+## ORGANISATION PAGE ##
+#######################
 
-if categorie_2 == 'Généralités':
-    st.title('Les Généralités')
+if categorie_2 == 'Organisations':
+    st.title('Les Organisations')
 
 
     st.markdown("### Qui fait le mieux les mises à jours ? Gros organisation (+5 fiches) ? ")
