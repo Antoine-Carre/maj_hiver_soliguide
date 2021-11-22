@@ -221,24 +221,30 @@ if categorie_2 == 'Structures':
             # Qui a fait la màj ?
 
             df_history_campaign_users_final = df_fiches_màj[['status','created_at','territory']]
+            
+            df_history_campaign_users_final.replace({"status":{'ADMIN_SOLIGUIDE':"l'équipe Soliguide","PRO":"les acteurs"}}, inplace=True)
 
             table_2 = pd.pivot_table(df_history_campaign_users_final, values='status', index=['created_at'], columns=['status'], aggfunc=np.count_nonzero)
 
             table_2.reset_index(inplace=True)
 
             table_2.fillna(0, inplace=True)
-            
-            table_2.rename(columns={'ADMIN_SOLIGUIDE':"l'équipe Soliguide","PRO":"les acteurs"}, inplace=True)
 
-            fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0']) 
+            fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
-
+            
+            fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
+            fig3bis.update_traces(textinfo="percent+label")
+            fig3bis.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
+            
 
 
             st.markdown("### Qui a fait la màj ?")
 
             st.plotly_chart(fig3, use_container_width=True)
+            
+            st.plotly_chart(fig3bis, use_container_width=True)
 
 
             #Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc.
