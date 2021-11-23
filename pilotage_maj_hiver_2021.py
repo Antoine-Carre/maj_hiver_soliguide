@@ -394,14 +394,41 @@ if categorie_2 == 'Les comptes pro':
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
 
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
-
         st.plotly_chart(figComptePro, use_container_width=True)
 
     else:
         st.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")
 
+    expander = st.expander("Comptes pro créés cuimulé")
+    expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
+
+    if categorie == "France":
+        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
+
+        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+
+            
+        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        expander.plotly_chart(figComptePro, use_container_width=True)
+        
+    elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+
+        df_cpe_pro_cum = pd.merge(df_cpe_pro.createdAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
+
+        figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]))
+
+        figCompteProCum.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+
+            
+        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        expander.plotly_chart(figCompteProCum, use_container_width=True)
+
+    else:
+        expander.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")      
 
     if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)' and categorie != 'Hérault (34)' and categorie != 'Indre (36)' and categorie != 'Puy-de-Dôme (63)' and categorie != 'Saine-Maritime (76)' :
 
