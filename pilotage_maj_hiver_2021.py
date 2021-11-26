@@ -23,7 +23,7 @@ st.set_page_config(page_title="Soliguide - Mise à jour hiver 2021-2022",
 ############# 
 st.sidebar.image("https://soliguide.fr/assets/images/logo.png", use_column_width=True)
 st.sidebar.title('Soliguide 2021')
-st.sidebar.subheader('Mise à jour été')
+st.sidebar.subheader('❄️ Mise à jour hiver ❄️')
 
 categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Alpes-Maritimes (06)",
                                             "Ardèche (07)","Bouche-du-Rhône (13)","Cantal (15)",
