@@ -91,10 +91,10 @@ if categorie_2 == 'Mails':
     <br/><font size='3'>emails envoyés<br></font></center>
     """
 
-    html_string_2 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Relance envoyées'])}</font>
-    <br/><font size='3'>dont emails de relance envoyés<br></font></center>
-    """
+    #html_string_2 = f"""<br>
+    #<center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Relance envoyées'])}</font>
+    #<br/><font size='3'>dont emails de relance envoyés<br></font></center>
+    #"""
 
     html_string_3 = f"""<br>
     <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
