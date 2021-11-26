@@ -103,7 +103,7 @@ if categorie_2 == 'Mails':
 
     col1.markdown(html_string_1, unsafe_allow_html=True)
 
-    col2.markdown(html_string_2, unsafe_allow_html=True)
+    #col2.markdown(html_string_2, unsafe_allow_html=True)
 
     col3.markdown(html_string_3, unsafe_allow_html=True)
 
