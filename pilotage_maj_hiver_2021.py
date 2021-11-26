@@ -147,7 +147,7 @@ if categorie_2 == 'Mails':
     col1, col2, col3 = st.columns(3)
 
     html_string_7 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Rappels demandées'])}</font>
+    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails répondus'])}</font>
     <br/><font size='3'>emails répondus
     <br/><font size='3'><i>(Attention : ce chiffre ne tient pas compte des réponses par téléphone ou vers un email nominatif)</i><br></font></center>
 
