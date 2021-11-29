@@ -172,7 +172,8 @@ if categorie_2 == 'Structures':
     df_fiches_màj_vf = df_fiches_màj[['territory','sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']]
     df_fiches_màj_vf.replace({True:1, False:0}, inplace=True)
     df_fiches_màj_vf['A jour'] = df_fiches_màj_vf[['sections.closed.updated','sections.hours.updated','sections.services.updated','sections.tempMessage.updated']].sum(axis=1)
-    df_fiches_màj_pie = df_fiches_màj_vf['A jour'].map(lambda x: 'Fiches totalement à jour' if x == 4 else ('Fiches partiellement à jour' if x == 3 else ('Fiches partiellement à jour' if x == 2 else ('Fiches partiellement à jour' if x == 1 else x== 'à mettre à jour'))))    df_fiches_màj_pie.replace({False : "Fiches à mettre à jour"}, inplace=True)
+    df_fiches_màj_pie = df_fiches_màj_vf['A jour'].map(lambda x: 'Fiches totalement à jour' if x == 4 else ('Fiches partiellement à jour' if x == 3 else ('Fiches partiellement à jour' if x == 2 else ('Fiches partiellement à jour' if x == 1 else x== 'à mettre à jour'))))    
+    df_fiches_màj_pie.replace({False : "Fiches à mettre à jour"}, inplace=True)
     df_fiches_màj_pie = pd.DataFrame(df_fiches_màj_pie.value_counts())
 
     st.markdown('### Combien de fiches ont été mises à jour totalement ?')
