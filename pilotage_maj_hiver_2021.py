@@ -331,7 +331,7 @@ if categorie_2 == 'Organisations':
     st.title('Les Organisations')
 
 
-    st.markdown("### Qui fait le mieux les mises à jours ? Gros organisation (+5 fiches) ? ")
+    st.markdown("### Qui fait le mieux les mises à jours ?")
    
     if categorie == "France":
         df_orga = df_orga
