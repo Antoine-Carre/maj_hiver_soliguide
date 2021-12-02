@@ -402,7 +402,8 @@ if categorie_2 == 'Les comptes pro':
 
     else:
         st.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")
-
+        
+    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro créés en cumulé :')
     expander = st.expander("Comptes pro créés cuimulé")
     expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
 
