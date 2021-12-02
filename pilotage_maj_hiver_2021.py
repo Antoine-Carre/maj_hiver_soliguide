@@ -215,6 +215,8 @@ if categorie_2 == 'Structures':
             fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+            fig_2.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+
 
             st.plotly_chart(fig_2, use_container_width=True)
 
@@ -237,6 +239,7 @@ if categorie_2 == 'Structures':
 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+            fig3.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
 
             tabs = pd.DataFrame(df_history_campaign_users_final.status.value_counts())
             
@@ -305,7 +308,7 @@ if categorie_2 == 'Structures':
             fig4.update_xaxes(visible=True, showticklabels=False)
 
 
-            st.markdown("### Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc")
+            st.markdown("### Le nombre et le type de modifications dûs à la màj : fermetures (avec durée), changements des horaires, changements des services, pas de changement, etc")
             st.plotly_chart(fig4, use_container_width=True)
 
 
