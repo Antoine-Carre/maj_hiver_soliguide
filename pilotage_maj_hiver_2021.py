@@ -382,7 +382,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"]),]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
 
 
             
@@ -409,7 +409,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"]),]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
 
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
