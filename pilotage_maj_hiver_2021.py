@@ -372,7 +372,7 @@ if categorie_2 == 'Organisations':
 if categorie_2 == 'Les comptes pro':
     st.title('Les Comptes Professionnels')
 
-    st.markdown("### Combien de compte pro créé depuis le début de la mise à jour ?")
+    st.markdown("### Combien de comptes pro créés depuis le début de la mise à jour hiver ?")
 
     new_header = df_cpe_pro.iloc[0] #grab the first row for the header
     df_cpe_pro = df_cpe_pro[1:] #take the data less the header row
@@ -405,7 +405,7 @@ if categorie_2 == 'Les comptes pro':
         st.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")
         
     st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro créés en cumulé :')
-    expander = st.expander("Comptes pro créés cuimulé")
+    expander = st.expander("Comptes pro créés cumulés")
     expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
 
     if categorie == "France":
@@ -438,7 +438,7 @@ if categorie_2 == 'Les comptes pro':
 
     if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)' and categorie != 'Hérault (34)' and categorie != 'Indre (36)' and categorie != 'Puy-de-Dôme (63)' and categorie != 'Saine-Maritime (76)' :
 
-        st.markdown("### Combien de fiche sont reliées au compte pro ?")
+        st.markdown("### Combien de fiches sont reliées aux comptes pro ?")
 
         df_fiches_reliées_2 = df_fiche_cpe_pro.copy()
 
