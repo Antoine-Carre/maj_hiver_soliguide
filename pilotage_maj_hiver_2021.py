@@ -380,12 +380,12 @@ if categorie_2 == 'Les comptes pro':
     new_header = df_cpe_pro.iloc[0] #grab the first row for the header
     df_cpe_pro = df_cpe_pro[1:] #take the data less the header row
     df_cpe_pro.columns = new_header #set the header row as the df header
-    df_cpe_pro.rename(columns={ df_cpe_pro.columns[1]: "createdAt" }, inplace = True)
+    df_cpe_pro.rename(columns={ df_cpe_pro.columns[1]: "updatedAt" }, inplace = True)
     df_cpe_pro.rename(columns={ df_cpe_pro.columns[-1]: "Total" }, inplace = True)
 
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total)
 
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
@@ -396,7 +396,7 @@ if categorie_2 == 'Les comptes pro':
         st.plotly_chart(figComptePro, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=float(cat_dict[categorie]))
 
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
@@ -412,7 +412,7 @@ if categorie_2 == 'Les comptes pro':
     expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
 
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
@@ -424,7 +424,7 @@ if categorie_2 == 'Les comptes pro':
         
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
 
-        df_cpe_pro_cum = pd.merge(df_cpe_pro.createdAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
+        df_cpe_pro_cum = pd.merge(df_cpe_pro.updatedAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
 
         figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]))
 
