@@ -474,7 +474,7 @@ if categorie_2 == 'Les comptes pro':
     else:
         st.markdown("#### Aucun compte pro a été invité depuis le début de la mise à jour")
         
-    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro invités en cumulé :')
+    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro invités qui ont créé leur compte, en cumulé :')
     expander = st.expander("Comptes pro invités qui ont créé leur compte cumulés")
     expander.write(f'Voici les comptes pro invités qui ont créé leur compte, en cumulés, en {categorie} : ')
 
