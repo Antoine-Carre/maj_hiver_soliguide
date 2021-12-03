@@ -479,7 +479,7 @@ if categorie_2 == 'Les comptes pro':
     expander.write(f'Voici les comptes pro invités qui ont créé leur compte, en cumulés, en {categorie} : ')
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total.fillna(method="ffill", color_discrete_sequence= [ '#7201a8']).cumsum())
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum(),  color_discrete_sequence= [ '#7201a8'])
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
