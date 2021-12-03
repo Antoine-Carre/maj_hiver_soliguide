@@ -375,7 +375,7 @@ if categorie_2 == 'Organisations':
 if categorie_2 == 'Les comptes pro':
     st.title('Les Comptes Professionnels')
 
-    st.markdown("### Combien de comptes pro créés depuis le début de la mise à jour hiver ?")
+    st.markdown("### Combien de comptes pro invités depuis le début de la mise à jour hiver ?")
 
     new_header = df_cpe_pro.iloc[0] #grab the first row for the header
     df_cpe_pro = df_cpe_pro[1:] #take the data less the header row
@@ -387,7 +387,7 @@ if categorie_2 == 'Les comptes pro':
     if categorie == "France":
         figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total)
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
             
@@ -398,23 +398,23 @@ if categorie_2 == 'Les comptes pro':
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
         figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=float(cat_dict[categorie]))
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
         
         st.plotly_chart(figComptePro, use_container_width=True)
 
     else:
-        st.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")
+        st.markdown("#### Aucun compte pro a été invité depuis le début de la mise à jour")
         
-    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro créés en cumulé :')
-    expander = st.expander("Comptes pro créés cumulés")
-    expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
+    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro invités en cumulé :')
+    expander = st.expander("Comptes pro invités cumulés")
+    expander.write(f'Voici les comptes pro invités cumulés en {categorie} : ')
 
     if categorie == "France":
         figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
             
@@ -428,7 +428,7 @@ if categorie_2 == 'Les comptes pro':
 
         figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]))
 
-        figCompteProCum.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figCompteProCum.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
             
@@ -437,7 +437,7 @@ if categorie_2 == 'Les comptes pro':
         expander.plotly_chart(figCompteProCum, use_container_width=True)
 
     else:
-        expander.markdown("#### Aucun compte pro a été créé depuis le début de la mise à jour")      
+        expander.markdown("#### Aucun compte pro a été invités depuis le début de la mise à jour")      
 
     if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)' and categorie != 'Hérault (34)' and categorie != 'Indre (36)' and categorie != 'Puy-de-Dôme (63)' and categorie != 'Saine-Maritime (76)' :
 
