@@ -48,7 +48,7 @@ fiches = './pilotage màj hiver 2021/df_fiches_data.csv'
 orga = './pilotage màj hiver 2021/df_orga_data.csv'
 cpe_pro = './pilotage màj hiver 2021/df_cpte_pro_data.csv'
 fiche_cpte_pro = './pilotage màj hiver 2021/df_fiche_with_cpte_pro_data.csv'
-
+fiche_cpte_pro_valide = './pilotage màj hiver 2021/df_cpte_pro_valide_data.csv'
 
 df_mails = load_df(mails)
 df_mails = df_mails.fillna(0)
@@ -62,6 +62,8 @@ df_orga = load_df(orga)
 df_cpe_pro = load_df(cpe_pro)
 
 df_fiche_cpe_pro = load_df(fiche_cpte_pro)
+
+df_fiche_cpte_pro_valide = load_df(fiche_cpte_pro_valide)
 
 
 
@@ -438,6 +440,72 @@ if categorie_2 == 'Les comptes pro':
 
     else:
         expander.markdown("#### Aucun compte pro a été invités depuis le début de la mise à jour")      
+        
+######
+    st.markdown("### Combien de comptes pro invités ont créé leur compte depuis le début de la mise à jour ?")
+
+    new_header = df_fiche_cpte_pro_valide.iloc[0] #grab the first row for the header
+    df_cpe_pro = df_fiche_cpte_pro_valide[1:] #take the data less the header row
+    df_cpe_pro.columns = new_header #set the header row as the df header
+    df_cpe_pro.rename(columns={ df_cpe_pro.columns[1]: "updatedAt" }, inplace = True)
+    df_cpe_pro.rename(columns={ df_cpe_pro.columns[-1]: "Total" }, inplace = True)
+
+
+    if categorie == "France":
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total, color_discrete_sequence= [ '#7201a8'])
+
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+            
+        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        st.plotly_chart(figComptePro, use_container_width=True)
+
+    elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=float(cat_dict[categorie]), color_discrete_sequence= [ '#7201a8'])
+
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+        
+        st.plotly_chart(figComptePro, use_container_width=True)
+
+    else:
+        st.markdown("#### Aucun compte pro a été invité depuis le début de la mise à jour")
+        
+    st.markdown('## Veuillez cliquer sur le bandeau, ci-dessous, pour afficher les comptes pro invités en cumulé :')
+    expander = st.expander("Comptes pro invités qui ont créé leur compte cumulés")
+    expander.write(f'Voici les comptes pro invités qui ont créé leur compte, en cumulés, en {categorie} : ')
+
+    if categorie == "France":
+        figComptePro = px.bar(df_cpe_pro, x='updatedAt', y=df_cpe_pro.Total.fillna(method="ffill", color_discrete_sequence= [ '#7201a8']).cumsum())
+
+        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+            
+        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        expander.plotly_chart(figComptePro, use_container_width=True)
+        
+    elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+
+        df_cpe_pro_cum = pd.merge(df_cpe_pro.updatedAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
+
+        figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]), color_discrete_sequence= [ '#7201a8'])
+
+        figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figCompteProCum.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+            
+        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        expander.plotly_chart(figCompteProCum, use_container_width=True)
+
+    else:
+        expander.markdown("#### Aucun compte pro a été invités depuis le début de la mise à jour")             
+#####
 
     if categorie != 'Ardèche (07)' and categorie != 'Drôme (26)' and categorie != 'Hérault (34)' and categorie != 'Indre (36)' and categorie != 'Puy-de-Dôme (63)' and categorie != 'Saine-Maritime (76)' :
 
