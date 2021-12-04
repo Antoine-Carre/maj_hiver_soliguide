@@ -401,7 +401,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
         
         st.plotly_chart(figComptePro, use_container_width=True)
 
