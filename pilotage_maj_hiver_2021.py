@@ -522,10 +522,10 @@ if categorie_2 == 'Les comptes pro':
 
         test = pd.DataFrame(df_fiches_reliées_2['Niveau de validation des comptes'].value_counts()).rename_axis('Status').reset_index()
 
-        fig6 = px.pie(values=test['Niveau de validation des comptes'], names=test.Status, title='Répartition des fiches par status des comptes liés')
+        fig6 = px.pie(values=test['Niveau de validation des comptes'], names=test.Status, title='Répartition des fiches par statut des comptes liés')
         fig6.update_traces(textinfo="percent", textposition='inside', textfont_size=18,)
         fig6.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
-        fig6.update_layout(legend = dict(font = dict(family = "arial", size = 16)), legend_title="Status des comptes liés", )
+        fig6.update_layout(legend = dict(font = dict(family = "arial", size = 16)), legend_title="", )
         fig6.update_layout(font=dict(
             family="arial",
             size=16,))
