@@ -218,8 +218,6 @@ if categorie_2 == 'Structures':
             fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
-            fig_2.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
-
 
             st.plotly_chart(fig_2, use_container_width=True)
 
