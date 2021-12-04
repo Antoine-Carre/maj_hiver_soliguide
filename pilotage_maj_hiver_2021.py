@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from datetime import timedelta
 import datetime
+from datetime import datetime
 import plotly.express as px
 import streamlit.components.v1 as components
 
@@ -213,7 +214,7 @@ if categorie_2 == 'Structures':
             table.reset_index(inplace=True)
         
         # Nbre de fiches màj par jour
-
+            
             fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
