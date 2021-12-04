@@ -214,10 +214,10 @@ if categorie_2 == 'Structures':
         
         # Nbre de fiches màj par jour
             
-            table['date'] = table.date.astype(str)
             fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+            fig_2.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
 
             st.plotly_chart(fig_2, use_container_width=True)
 
@@ -240,7 +240,7 @@ if categorie_2 == 'Structures':
 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
-            fig3.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+            fig3.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
 
             tabs = pd.DataFrame(df_history_campaign_users_final.status.value_counts())
             
@@ -390,7 +390,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
@@ -417,7 +417,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
@@ -431,7 +431,7 @@ if categorie_2 == 'Les comptes pro':
 
         figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figCompteProCum.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figCompteProCum.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
@@ -455,7 +455,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
@@ -466,7 +466,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
         
         st.plotly_chart(figComptePro, use_container_width=True)
 
@@ -482,7 +482,7 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
@@ -496,7 +496,7 @@ if categorie_2 == 'Les comptes pro':
 
         figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figCompteProCum.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) #hide weekends
+        figCompteProCum.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
             
         #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
