@@ -398,32 +398,32 @@ if categorie_2 == 'Les comptes pro':
 
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
+        figCompteProFrance = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
 
-        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
-        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figCompteProFrance.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figCompteProFrance.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
 
         dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
         dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
         dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+        figCompteProFrance.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
-        st.plotly_chart(figComptePro, use_container_width=True)
+        st.plotly_chart(figCompteProFrance, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
+        figCompteProTerritoire = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
 
-        figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
-        figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figCompteProTerritoire.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        figCompteProTerritoire.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         
         dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
         dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
         dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
-        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+        figCompteProTerritoire.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
-        st.plotly_chart(figComptePro, use_container_width=True)
+        st.plotly_chart(figCompteProTerritoire, use_container_width=True)
 
     else:
         st.markdown("#### Aucun compte pro a été invité depuis le début de la mise à jour")
