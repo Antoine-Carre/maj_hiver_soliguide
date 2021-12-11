@@ -218,6 +218,14 @@ if categorie_2 == 'Structures':
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
             fig_2.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
+            
+            
+            dt_all = pd.date_range(start=table['date'].iloc[0],end=table['date'].iloc[-1])
+            dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table['date'])]
+            dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+            fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+
 
             st.plotly_chart(fig_2, use_container_width=True)
 
