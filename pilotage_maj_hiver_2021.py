@@ -417,8 +417,8 @@ if categorie_2 == 'Les comptes pro':
         st.plotly_chart(fig, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
-        #figCompteProTerritoire = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
-
+        df_cpe_pro = df_cpe_pro[['createdAt',float(cat_dict[categorie]]]
+        df_cpe_pro.dropna(inplace=True)
   
         figCompteProTerritoire = go.Figure(data=[
             go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro[float(cat_dict[categorie])]),
