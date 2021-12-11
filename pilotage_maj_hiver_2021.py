@@ -416,7 +416,6 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
         
         dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
         dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
@@ -438,7 +437,6 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
       
         dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
         dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
