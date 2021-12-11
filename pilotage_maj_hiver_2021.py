@@ -505,6 +505,10 @@ if categorie_2 == 'Les comptes pro':
         st.plotly_chart(figComptePro, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+        
+        df_cpe_pro = df_cpe_pro[['createdAt',float(cat_dict[categorie])]]
+        df_cpe_pro.dropna(inplace=True)
+        
         figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]), color_discrete_sequence= [ '#7201a8'])
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
