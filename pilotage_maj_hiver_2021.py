@@ -4,6 +4,7 @@ import numpy as np
 from datetime import timedelta
 import datetime
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit.components.v1 as components
 
 @st.cache(allow_output_mutation=True)
@@ -398,18 +399,33 @@ if categorie_2 == 'Les comptes pro':
 
 
     if categorie == "France":
-        figCompteProFrance = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
+        #figCompteProFrance = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
 
-        figCompteProFrance.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
-        figCompteProFrance.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        #figCompteProFrance.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+        #figCompteProFrance.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
 
-        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
-        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        #dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        #dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        #dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        #figCompteProFrance.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+
+        
+        fig = go.Figure(data=[
+            go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro["Total"]),
+        ])
+
+        fig.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de compte pro",)
+        fig.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
+
+        dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
         dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
-        figCompteProFrance.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
-
-        st.plotly_chart(figCompteProFrance, use_container_width=True)
+        fig.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+        
+        
+        st.plotly_chart(fig, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
         figCompteProTerritoire = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
