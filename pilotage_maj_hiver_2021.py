@@ -248,15 +248,19 @@ if categorie_2 == 'Structures':
 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
-            fig3.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
+                     
+            dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
+            dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
+            dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+            fig3.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
             tabs = pd.DataFrame(df_history_campaign_users_final.status.value_counts())
             
             fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
             fig3bis.update_traces(textinfo="percent+label")
             fig3bis.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
-            
-
+                               
 
             st.markdown("### Qui a fait la màj ?")
 
@@ -398,9 +402,12 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
         st.plotly_chart(figComptePro, use_container_width=True)
 
@@ -411,6 +418,12 @@ if categorie_2 == 'Les comptes pro':
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
         
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
+
         st.plotly_chart(figComptePro, use_container_width=True)
 
     else:
@@ -426,8 +439,12 @@ if categorie_2 == 'Les comptes pro':
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+      
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
         expander.plotly_chart(figComptePro, use_container_width=True)
         
@@ -439,9 +456,13 @@ if categorie_2 == 'Les comptes pro':
 
         figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figCompteProCum.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
+
+        dt_all = pd.date_range(start=df_cpe_pro_cum['createdAt'].iloc[0],end=df_cpe_pro_cum['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro_cum['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figCompteProCum.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
             
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
         expander.plotly_chart(figCompteProCum, use_container_width=True)
 
@@ -463,10 +484,13 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])  
+        
         st.plotly_chart(figComptePro, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
@@ -474,8 +498,13 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-        
+
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])  
+                
         st.plotly_chart(figComptePro, use_container_width=True)
 
     else:
@@ -490,10 +519,13 @@ if categorie_2 == 'Les comptes pro':
 
         figComptePro.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+        
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])  
+        
         expander.plotly_chart(figComptePro, use_container_width=True)
         
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
@@ -504,9 +536,13 @@ if categorie_2 == 'Les comptes pro':
 
         figCompteProCum.update_traces(hovertemplate = "Date d'invitation des comptes pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figCompteProCum.update_xaxes(rangebreaks=[dict(bounds=["sat", "mon"])]) #hide weekends
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+
+        dt_all = pd.date_range(start=df_cpe_pro_cum['createdAt'].iloc[0],end=df_cpe_pro_cum['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro_cum['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figCompteProCum.update_xaxes(rangebreaks=[dict(values=dt_breaks)])  
+        
 
         expander.plotly_chart(figCompteProCum, use_container_width=True)
 
