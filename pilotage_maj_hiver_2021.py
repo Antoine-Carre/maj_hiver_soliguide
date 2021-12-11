@@ -459,7 +459,7 @@ if categorie_2 == 'Les comptes pro':
         
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
 
-        df_cpe_pro_cum = pd.merge(df_cpe_pro.createdAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
+        df_cpe_pro_cum = pd.merge(df_cpe_pro.createdAt,df_cpe_pro[int(cat_dict[categorie])].dropna().cumsum(), left_index=True, right_index=True)
 
         figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]))
 
