@@ -421,7 +421,7 @@ if categorie_2 == 'Les comptes pro':
 
   
         figCompteProTerritoire = go.Figure(data=[
-            go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro[float(cat_dict[categorie]]),
+            go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro[float(cat_dict[categorie])]),
         ])
 
         figCompteProTerritoire.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de compte pro",)
