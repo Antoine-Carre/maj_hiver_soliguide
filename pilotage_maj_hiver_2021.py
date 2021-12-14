@@ -240,9 +240,7 @@ if categorie_2 == 'Structures':
 
             table_2.fillna(0, inplace=True)
             
-            if "l'équipe territoriale" in list(table_2.columns):
-                fig3 = px.bar(table_2, x="created_at", y=["l'équipe territoriale", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
-            elif not "l'équipe Soliguide" in list(table_2.columns):
+            if not "l'équipe Soliguide" in list(table_2.columns):
                 fig3 = px.bar(table_2, x="created_at", y=["les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             elif not "les acteurs" in list(table_2.columns):
                 fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
