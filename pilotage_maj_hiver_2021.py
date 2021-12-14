@@ -246,8 +246,10 @@ if categorie_2 == 'Structures':
                 fig3 = px.bar(table_2, x="created_at", y=["les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             elif not "les acteurs" in list(table_2.columns):
                 fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
-            else:
+            elif not "l'équipe territoriale" in list(table_2.columns):
                 fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
+            else:
+                fig3 = px.bar(table_2, x="created_at", y=["l'équipe Soliguide", "les acteurs", "l'équipe territoriale"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
 
             fig3.update_traces(hovertemplate = "Date de la mise à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig3.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
