@@ -228,18 +228,20 @@ if categorie_2 == 'Structures':
 
             st.plotly_chart(fig_2, use_container_width=True)
 
-            # Qui a fait la màj ?rangebreaks=[dict(values=dt_breaks)]
+            # Qui a fait la màj ?
 
             df_history_campaign_users_final = df_fiches_màj[['status','created_at','territory']]
             
-            df_history_campaign_users_final.replace({"status":{'ADMIN_SOLIGUIDE':"l'équipe Soliguide","PRO":"les acteurs"}}, inplace=True)
+            df_history_campaign_users_final.replace({"status":{'ADMIN_SOLIGUIDE':"l'équipe Soliguide","PRO":"les acteurs", "ADMIN_TERRITORY":"l'équipe territoriale"}}, inplace=True)
 
             table_2 = pd.pivot_table(df_history_campaign_users_final, values='status', index=['created_at'], columns=['status'], aggfunc=np.count_nonzero)
 
             table_2.reset_index(inplace=True)
 
             table_2.fillna(0, inplace=True)
-
+            
+            if "l'équipe territoriale" in list(table_2.columns):
+                fig3 = px.bar(table_2, x="created_at", y=["l'équipe territoriale", "les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             if not "l'équipe Soliguide" in list(table_2.columns):
                 fig3 = px.bar(table_2, x="created_at", y=["les acteurs"], color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par jour et status") 
             elif not "les acteurs" in list(table_2.columns):
