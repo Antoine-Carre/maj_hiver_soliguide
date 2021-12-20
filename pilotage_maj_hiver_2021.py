@@ -456,17 +456,25 @@ if categorie_2 == 'Les comptes pro':
         expander.plotly_chart(figComptePro, use_container_width=True)
         
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+        
 
         df_cpe_pro_cum = pd.merge(df_cpe_pro.createdAt,df_cpe_pro[int(cat_dict[categorie])].cumsum(), left_index=True, right_index=True)
+        df_cpe_pro_cum.dropna(inplace=True)        
+        
+        figCompteProCum = go.Figure(data=[
+            go.Bar(x=df_cpe_pro_cum['createdAt'], y=df_cpe_pro_cum[float(cat_dict[categorie])])
+        ])
 
-        figCompteProCum = px.bar(df_cpe_pro_cum, x='createdAt', y=float(cat_dict[categorie]))
-
-        figCompteProCum.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figCompteProCum.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figCompteProCum.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
 
+        dt_all = pd.date_range(start=df_cpe_pro_cum['createdAt'].iloc[0],end=df_cpe_pro_cum['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro_cum['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figCompteProCum.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) 
             
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
-
+            
         expander.plotly_chart(figCompteProCum, use_container_width=True)
 
     else:
