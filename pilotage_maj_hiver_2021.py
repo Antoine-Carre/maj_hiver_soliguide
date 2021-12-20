@@ -404,8 +404,8 @@ if categorie_2 == 'Les comptes pro':
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
 
-        dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
-        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
         dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
         figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) 
@@ -435,8 +435,8 @@ if categorie_2 == 'Les comptes pro':
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
         figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
 
-        dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
-        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
         dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
         figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])           
