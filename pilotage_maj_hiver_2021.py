@@ -23,7 +23,7 @@ st.set_page_config(page_title="Soliguide - Mise à jour hiver 2021-2022",
 ############# 
 st.sidebar.image("https://soliguide.fr/assets/images/logo.png", use_column_width=True)
 st.sidebar.title('Soliguide 2021')
-st.sidebar.subheader('Mise à jour été')
+st.sidebar.subheader('Mise à jour hiver')
 
 categorie = st.sidebar.selectbox("Choisissez votre territoire :", ("France", "Alpes-Maritimes (06)",
                                             "Ardèche (07)","Bouche-du-Rhône (13)","Cantal (15)",
@@ -219,6 +219,12 @@ if categorie_2 == 'Structures':
             fig_2 = px.bar(table, x="date", y=["Fiches actualisées", "Fiches à mettre à jour"], color_discrete_sequence= [ '#7201a8', '#d8576b']) 
             fig_2.update_traces(hovertemplate = "Date du dernier relevé des mises à jour : le %{x}<br>Nbre de fiches: %{value}")
             fig_2.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de fiches",)
+                        
+            dt_all = pd.date_range(start=table['date'].iloc[0],end=table['date'].iloc[-1])
+            dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table['date'])]
+            dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+            
+            fig_2.update_xaxes(rangebreaks=[dict(values=dt_breaks)])
 
             st.plotly_chart(fig_2, use_container_width=True)
 
@@ -243,6 +249,8 @@ if categorie_2 == 'Structures':
             fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
             fig3bis.update_traces(textinfo="percent+label")
             fig3bis.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
+            
+            
             
 
 
