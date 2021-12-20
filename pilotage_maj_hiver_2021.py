@@ -396,15 +396,20 @@ if categorie_2 == 'Les comptes pro':
 
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total)
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+        figComptePro = go.Figure(data=[
+            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total, marker_color='#7201a8'))
+        ])
+
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
 
+        dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
 
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) 
             
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
 
         st.plotly_chart(figComptePro, use_container_width=True)
 
@@ -423,14 +428,18 @@ if categorie_2 == 'Les comptes pro':
     expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
 
     if categorie == "France":
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
+        figComptePro = go.Figure(data=[
+            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total.fillna(method="ffill").cumsum(), marker_color='#7201a8'))
+        ])
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
-        figComptePro.update_xaxes(rangebreaks=[{ 'pattern': 'day of week', 'bounds': [6, 1]}]) #hide weekends
+        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
 
-            
-        #figComptePro['layout']['yaxis1'].update(title='Nbre de nouveaux comptes', dtick=1)
+        dt_all = pd.date_range(start=table_2['created_at'].iloc[0],end=table_2['created_at'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(table_2['created_at'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)])           
 
         expander.plotly_chart(figComptePro, use_container_width=True)
         
