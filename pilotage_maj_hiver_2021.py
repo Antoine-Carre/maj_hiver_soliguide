@@ -398,7 +398,7 @@ if categorie_2 == 'Les comptes pro':
     if categorie == "France":
 
         figComptePro = go.Figure(data=[
-            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total, marker_color='#7201a8'))
+            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total, marker_color='#7201a8')
         ])
 
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
