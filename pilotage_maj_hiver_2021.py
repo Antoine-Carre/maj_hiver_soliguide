@@ -415,7 +415,7 @@ if categorie_2 == 'Les comptes pro':
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
         
-        df_cpe_pro = df_cpe_pro[df_cpe_pro[float(cat_dict[categorie])]]
+        df_cpe_pro = df_cpe_pro[['createdAt', float(cat_dict[categorie])]]
         df_cpe_pro.dropna(inplace=True)
         
         figComptePro = go.Figure(data=[
