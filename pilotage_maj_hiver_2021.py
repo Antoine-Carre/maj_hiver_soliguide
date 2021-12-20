@@ -414,6 +414,10 @@ if categorie_2 == 'Les comptes pro':
         st.plotly_chart(figComptePro, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
+        
+        df_cpe_pro = df_cpe_pro[df_cpe_pro[float(cat_dict[categorie])]]
+        df_cpe_pro.dropna(inplace=True)
+        
         figComptePro = go.Figure(data=[
             go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro[float(cat_dict[categorie])])
         ])
@@ -437,7 +441,7 @@ if categorie_2 == 'Les comptes pro':
 
     if categorie == "France":
         figComptePro = go.Figure(data=[
-            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total.fillna(method="ffill").cumsum(), marker_color='#7201a8')
+            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total.fillna(method="ffill").cumsum())
         ])
 
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
