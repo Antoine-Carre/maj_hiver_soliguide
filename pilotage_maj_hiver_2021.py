@@ -534,7 +534,8 @@ if categorie_2 == 'Les comptes pro':
     expander.write(f'Voici les comptes pro crées cumulés en {categorie} : ')
 
     if categorie == "France":
-       figComptePro = go.Figure(data=[
+        
+        figComptePro = go.Figure(data=[
             go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total.fillna(method="ffill").cumsum(), marker_color='#7201a8')
         ])
 
