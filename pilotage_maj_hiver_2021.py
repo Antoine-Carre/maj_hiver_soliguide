@@ -398,7 +398,7 @@ if categorie_2 == 'Les comptes pro':
     if categorie == "France":
 
         figComptePro = go.Figure(data=[
-            go.Bar(name="L'équipe Soliguide", x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total, marker_color='#7201a8')
+            go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro.Total)
         ])
 
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
@@ -414,10 +414,18 @@ if categorie_2 == 'Les comptes pro':
         st.plotly_chart(figComptePro, use_container_width=True)
 
     elif float(cat_dict[categorie]) in df_cpe_pro.columns:
-        figComptePro = px.bar(df_cpe_pro, x='createdAt', y=float(cat_dict[categorie]))
+        figComptePro = go.Figure(data=[
+            go.Bar(x=df_cpe_pro['createdAt'], y=df_cpe_pro[float(cat_dict[categorie])])
+        ])
 
-        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
         figComptePro.update_layout(xaxis=dict(tickformat="%d %B %Y"), xaxis_title="", yaxis_title="Nombre de comptes",)
+        figComptePro.update_traces(hovertemplate = "Date de creation de compte pro : le %{x}<br>Nbre de comptes: %{value}")
+
+        dt_all = pd.date_range(start=df_cpe_pro['createdAt'].iloc[0],end=df_cpe_pro['createdAt'].iloc[-1])
+        dt_obs = [d.strftime("%Y-%m-%d") for d in pd.to_datetime(df_cpe_pro['createdAt'])]
+        dt_breaks = [d for d in dt_all.strftime("%Y-%m-%d").tolist() if not d in dt_obs]
+
+        figComptePro.update_xaxes(rangebreaks=[dict(values=dt_breaks)]) 
 
         st.plotly_chart(figComptePro, use_container_width=True)
 
