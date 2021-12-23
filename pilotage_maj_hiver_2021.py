@@ -261,10 +261,12 @@ if categorie_2 == 'Structures':
 
 
             st.markdown("### Qui a fait la màj ?")
+            
+            col1, col2 = st.columns(2)
 
             st.plotly_chart(fig3, use_container_width=True)
             
-            st.plotly_chart(fig3bis, use_container_width=True)
+            col1.plotly_chart(fig3bis, use_container_width=True)
 
 
             #Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc.
