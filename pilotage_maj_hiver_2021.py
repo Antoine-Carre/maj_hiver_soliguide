@@ -262,12 +262,13 @@ if categorie_2 == 'Structures':
                  
             if categorie == "France":         
                 df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
+                df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
+                df_source_màj_2.loc['Appel & Mail'] = df_source_màj_2.loc['Appel,Mail'] + df_source_màj_2.loc['Mail,Appel']
+                df_source_màj_2.drop(['Appel,Mail','Mail,Appel'], inplace=True)
+                
             else:
                 df_source_màj = df_source_màj[df_source_màj.Territoire == int(cat_dict[categorie])]
-            
-            df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
-            df_source_màj_2.loc['Appel & Mail'] = df_source_màj_2.loc['Appel,Mail'] + df_source_màj_2.loc['Mail,Appel']
-            df_source_màj_2.drop(['Appel,Mail','Mail,Appel'], inplace=True)
+
 
             fig3ter = px.pie(values=df_source_màj_2['❄️ Source de la mise à jour'], names=df_source_màj_2.index, color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
             
