@@ -269,7 +269,7 @@ if categorie_2 == 'Structures':
 
             fig3ter = px.pie(values=df_source_màj_2['❄️ Source de la mise à jour'], names=df_source_màj_2.index, color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
             fig3ter.update_traces(textinfo="percent+label")
-            fig3ter.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
+            fig3ter.update_traces(hovertemplate = "%{label} <br>Nbre de fiches: %{value}")
 
             st.markdown("### Qui a fait la màj ?")
             
