@@ -267,7 +267,10 @@ if categorie_2 == 'Structures':
             
             df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
 
-            fig3ter = px.pie(values=df_source_màj_2['❄️ Source de la mise à jour'], names=df_source_màj_2.index, color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
+            #fig3ter = px.pie(values=df_source_màj_2['❄️ Source de la mise à jour'], names=df_source_màj_2.index, color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
+            
+            fig3ter = go.Figure(data=[go.Pie(labels=df_source_màj_2['❄️ Source de la mise à jour'], values=df_source_màj_2.index)], color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
+            fig3ter.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             fig3ter.update_traces(textinfo="percent+label")
             fig3ter.update_traces(hovertemplate = "%{label} <br>Nbre de fiches: %{value}")
 
