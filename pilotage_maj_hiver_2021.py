@@ -51,7 +51,7 @@ orga = './pilotage màj hiver 2021/df_orga_data.csv'
 cpe_pro = './pilotage màj hiver 2021/df_cpte_pro_data.csv'
 fiche_cpte_pro = './pilotage màj hiver 2021/df_fiche_with_cpte_pro_data.csv'
 fiche_cpte_pro_valide = './pilotage màj hiver 2021/df_cpte_pro_valide_data.csv'
-
+df_source_màj = './pilotage màj hiver 2021/df_source_màj.csv'
 
 
 df_mails = load_df(mails)
@@ -68,6 +68,8 @@ df_cpe_pro = load_df(cpe_pro)
 df_fiche_cpe_pro = load_df(fiche_cpte_pro)
 
 df_fiche_cpte_pro_valide = load_df(fiche_cpte_pro_valide)
+
+df_source_màj = load_df(df_source_màj)
 
 
 
@@ -257,8 +259,17 @@ if categorie_2 == 'Structures':
             fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
             fig3bis.update_traces(textinfo="percent+label")
             fig3bis.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
+                 
+            if categorie == "France":         
+                df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
+            else:
+                df_source_màj = df_source_màj[df_source_màj.Territoire == int(cat_dict[categorie])]
             
+            df_source_màj_2 = pd.DataFrame(df_source_màj['❄️ Source de la mise à jour'].value_counts())
 
+            fig3ter = px.pie(values=df_source_màj_2['❄️ Source de la mise à jour'], names=df_source_màj_2.index, color_discrete_sequence= px.colors.sequential.Plasma,title="Comment l'équipe a obtenu les informations ?")
+            fig3ter.update_traces(textinfo="percent+label")
+            fig3ter.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
 
             st.markdown("### Qui a fait la màj ?")
             
@@ -267,6 +278,7 @@ if categorie_2 == 'Structures':
             st.plotly_chart(fig3, use_container_width=True)
             
             col1.plotly_chart(fig3bis, use_container_width=True)
+            col2.plotly_chart(fig3ter, use_container_width=True)
 
 
             #Le nombre et le type de modifications dûes à la màj : fermetures (avec durée), changement des horaires, des services, pas de changement, etc.
