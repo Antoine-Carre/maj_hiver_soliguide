@@ -256,7 +256,7 @@ if categorie_2 == 'Structures':
 
             tabs = pd.DataFrame(df_history_campaign_users_final.status.value_counts())
             
-            fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'], title="Nombre de fiches mise à jour par status")
+            fig3bis = px.pie(values=tabs.status, names=tabs.index, color_discrete_sequence= ['#3E3A71', '#2896A0'])
             fig3bis.update_traces(textinfo="percent+label")
             fig3bis.update_traces(hovertemplate = "%{label}: <br>Nbre de fiches: %{value}")
                  
@@ -279,9 +279,10 @@ if categorie_2 == 'Structures':
             st.markdown("### Qui a fait la màj ?")
             
             col1, col2 = st.columns(2)
-
+            
             st.plotly_chart(fig3, use_container_width=True)
             
+            col1.markdown("Nombre de fiches mise à jour par status")            
             col1.plotly_chart(fig3bis, use_container_width=True)
             
             col2.markdown("Comment l'équipe a obtenu les informations ?")
