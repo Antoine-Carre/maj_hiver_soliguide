@@ -94,26 +94,28 @@ if categorie_2 == 'Mails':
 
     col1, col2, col3 = st.columns(3)
 
-    html_string_1 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'emails envoyés'])}</font>
-    <br/><font size='3'>emails envoyés<br></font></center>
-    """
+    with col1:
+        html_string_1 = f"""<br>
+        <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'emails envoyés'])}</font>
+        <br/><font size='3'>emails envoyés<br></font></center>
+        """
 
-    html_string_2 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Relance envoyées'])}</font>
-    <br/><font size='3'>dont emails de relance envoyés<br></font></center>
-    """
+        st.markdown(html_string_1, unsafe_allow_html=True)
 
-    html_string_3 = f"""<br>
-    <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
-    <br/><font size='3'>emails rejetés<br></font></center>
-    """
+    with col2:
+        html_string_2 = f"""<br>
+        <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Relance envoyées'])}</font>
+        <br/><font size='3'>dont emails de relance envoyés<br></font></center>
+        """
+        st.markdown(html_string_2, unsafe_allow_html=True)
 
-    col1.markdown(html_string_1, unsafe_allow_html=True)
+    with col3:
+        html_string_3 = f"""<br>
+        <center><font face='Helvetica' size='7'>{int(df_mails.loc[{(cat_dict[categorie])},'Mails rejetés'])}</font>
+        <br/><font size='3'>emails rejetés<br></font></center>
+        """
 
-    col2.markdown(html_string_2, unsafe_allow_html=True)
-
-    col3.markdown(html_string_3, unsafe_allow_html=True)
+        st.markdown(html_string_3, unsafe_allow_html=True)
 
 
     html_string = "<br>"
